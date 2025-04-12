@@ -1,0 +1,29 @@
+Q2
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',         
+  database: 'school'    
+});
+
+connection.connect(err => {
+  if (err) {
+    return console.error('Error connecting to DB:', err.message);
+  }
+  console.log('Connected to MySQL database.');
+
+  const query = 'SELECT * FROM Teacher WHERE salary > 20000';
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Query error:', err.message);
+      connection.end();
+      return;
+    }
+    console.log('Teachers with salary > 20000:');
+    console.table(results);
+    connection.end();
+  });
+});
