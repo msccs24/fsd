@@ -1,0 +1,99 @@
+Q1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login Form with Validation</title>
+</head>
+<body>
+
+  <form id="loginForm" onsubmit="return validateForm()">
+    <h2>Login</h2>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <div id="emailError" class="error"></div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <div id="passwordError" class="error"></div>
+
+    <input type="submit" value="Login">
+  </form>
+
+  <script>
+    function validateForm() {
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let emailError = document.getElementById("emailError");
+      let passwordError = document.getElementById("passwordError");
+      let isValid = true;
+
+      // Email regex
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
+      // Password regex (at least 6 characters, 1 letter, 1 number)
+      const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+      // Clear errors
+      emailError.textContent = "";
+      passwordError.textContent = "";
+
+      if (!emailPattern.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      if (!passwordPattern.test(password)) {
+        passwordError.textContent = "Password must be at least 6 characters, include letters and numbers.";
+        isValid = false;
+      }
+      return isValid;
+    }
+  </script>
+</body>
+</html>
+
+Q2  
+
+<HTML>
+<HEAD>
+<script>
+	function validateForm()
+	{
+		var Fname =document.getElementById("firstname").value;
+		var Lname =document.getElementById("lastname").value;
+		var age =document.getElementById("age").value;
+		var nameRegex = /^[A-Za-z]+$/;
+		
+		if(!Fname.match(nameRegex))
+		{
+			alert("First name should contain only alphabet character ");
+			return False;
+		}
+		if(!Lname.match(nameRegex))
+		{
+			alert("Last name should contain only alphabet character ");
+			return False;
+		}
+		if(age<18 || age>50)
+		{
+			alert("Age should be between 18 and 50");
+			return False;
+		}	
+		alert("form submitted successfully");	
+		return true;
+	}
+</script>
+</HEAD>
+<BODY>
+	<H2>STUDENT REGISTERATION FORM</H2>
+	<form onsubmit="return validateForm()">
+	<label>First Name</label>
+	<input type="text" id="firstname" name="firstname" required><br><br>
+	<label>Last Name</label>
+	<input type="text" id="lastname" name="lastname" required><br><br>
+	<label>Age</label>
+	<input type="number" id="age" name="age" required><br><br>	
+	<input type="submit" value="Submit"><br>
+	</form>
+</BODY>
+</HTML>
