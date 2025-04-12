@@ -1,0 +1,11 @@
+Q1
+const originalString = "Full Stack!";
+
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+const reversed = reverseString(originalString);
+console.log("Original String:", originalString);
+console.log("Reversed String:", reversed);
+
+Q2
