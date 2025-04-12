@@ -1,0 +1,53 @@
+Q1
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+	<button ng-click="myFunc()">Display Games</button>
+	<ol>
+	<li ng-repeat="i in game"ng-bind="i"></li>
+	</ol>
+</div>
+
+<script> 
+	angular.module('myApp',[])
+	.controller("myCtrl",['$scope',function($scope){
+	 	$scope.count=0;
+	 	$scope.myFunc = function(){
+	 	$scope.game = ['Cricket','vollyball','Basketball'];
+	 	};
+	 }]);
+</script>
+</body>
+</html>
+
+Q2
+const http=require('http');
+const fs=require('fs');
+
+const port=3000;
+http.createServer((req,res) => 
+{
+	const filePath='./file1.txt';
+	console.log(`Request for File :${filePath}`);
+	
+	fs.readFile(filePath,(err,data) =>
+	{
+		if(err)
+		{
+			res.writeHead(404,{'Content-Type':'text/plain'});
+			res.end("404 error : FIle not Found");
+		}
+		else
+		{
+			res.writeHead(200,{'Content-type':'text/plain'});
+			res.end(data);
+		}
+	});
+}).listen(port,() => {
+	console.log(`Server running at http://localhost:${port}`);
+});
