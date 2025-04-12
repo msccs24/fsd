@@ -1,0 +1,72 @@
+Q1
+var http=require('http');
+var formidable=require('formidable');
+
+http.createServer(function(req,res)
+{
+	if(req.url == '/fileupload')
+	{
+		var form=new formidable.IncomingForm();
+		form.parse(req,function(err,fields,files)
+		{
+			if(err) throw err;
+			res.write('File Uploaded');
+			res.end();
+		});
+	}
+	else
+	{
+		res.writeHead(200,{'Content-Type' : 'text.html'});
+		res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
+		res.write('<input type="file" name="filetoupload"> <br>');
+		res.write('<input type="submit">');
+		res.write('</form>');
+		return res.end();
+	}
+}).listen(5000);
+
+Q2
+<html>	
+<head>
+	<title>Student Form</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<script>
+function Validate()
+{
+	let uname=document.getElementById('uname').value;
+	let pass=document.getElementById('pass').value;
+	
+
+	if(uname.length > 3 && uname.length < 20 && pass.length >3 && pass.length<10)
+	{
+		alert("Data is correct");
+	}
+	else if(uname.length===0 && pass.length===0)
+	{
+		alert("Fill the Information");
+	}
+	else
+	{
+		alert("Enter the Valid Details");
+	}
+}
+</script>
+</head>
+<body ng-app>
+	<form name="studentform" novalidate>
+				 Username:<input type ="text" name="uname" ng-model="uname"ng-minlength="3"id="uname" ng-required="true">
+				 <span ng-show="studentform.uname.$touched && studentform.uname.$error.required">Username is required</span>
+				 <span ng-show="studentform.uname.$error.minlength">Username is Too short</span>
+ 				 <span ng-show="studentform.uname.$invalid">Enter Username</span><br><br>
+ 				 
+ 				 Password:<input type ="password" name="pass" ng-model="pass"ng-minlength="8"id="pass" ng-required="true">
+				 <span ng-show="studentform.uname.$touched && studentform.uname.$error.required">Password is required</span>
+				 <span ng-show="studentform.uname.$error.minlength">Password is Too short</span>
+ 				 <span ng-show="studentform.uname.$invalid">Enter Password</span><br><br>
+ 				 
+ 				 <input type="button" value="submit" onclick="Validate()">
+	</form>
+</body>
+</html>
+
