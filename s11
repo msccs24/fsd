@@ -1,0 +1,76 @@
+Q1
+const mysql = require('mysql2');
+
+// Create a connection to MySQL (no database selected yet)
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '' // your MySQL password here
+});
+
+// Connect to MySQL server
+connection.connect(err => {
+  if (err) {
+    return console.error('Connection error:', err.message);
+  }
+  console.log('Connected to MySQL server.');
+
+  // Step 1: Create Database
+  connection.query('CREATE DATABASE IF NOT EXISTS MovieDB', (err) => {
+    if (err) {
+      console.error('Error creating database:', err.message);
+      return connection.end();
+    }
+    console.log('Database "MovieDB" created or already exists.');
+
+    // Step 2: Connect to the MovieDB database
+    const movieDB = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'MovieDB'
+    });
+
+    movieDB.connect(err => {
+      if (err) {
+        return console.error('Error connecting to MovieDB:', err.message);
+      }
+
+      // Step 3: Create Movies table
+      const createTableQuery = `
+        CREATE TABLE IF NOT EXISTS Movies (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          genre VARCHAR(100),
+          release_year INT
+        )
+      `;
+
+      movieDB.query(createTableQuery, (err) => {
+        if (err) {
+          console.error('Error creating Movies table:', err.message);
+        } else {
+          console.log('Table "Movies" created or already exists.');
+        }
+
+        movieDB.end(); // Close MovieDB connection
+      });
+    });
+  });
+});
+
+Q2
+const express=require('express');
+const app=express();
+const PORT=8000;
+app.get('/',function(req,res)
+{
+    res.download('f1.txt');
+});
+
+app.listen(PORT,function(err)
+{
+    if(err)
+     console.log(err);
+    console.log("server listening port no 8000");
+});
