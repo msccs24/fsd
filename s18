@@ -1,0 +1,36 @@
+Q2
+const mysql = require('mysql');
+
+// Create a MySQL connection
+const connection = mysql.createConnection({
+  host: 'localhost',        // your DB host
+  user: 'root',             // your DB username
+  password: '',             // your DB password
+  database: 'your_database' // your DB name
+});
+
+// Connect to the database
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err.stack);
+    return;
+  }
+  console.log('Connected to MySQL');
+
+  // SQL query: get customers whose name starts with 'A'
+  const query = "SELECT * FROM customers WHERE name LIKE 'A%'";
+
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error.stack);
+      return;
+    }
+
+    console.log('Customers whose name starts with "A":');
+    console.log(results);
+
+    // Close the connection
+    connection.end();
+  });
+});
+
