@@ -1,0 +1,144 @@
+Q1
+const mysql = require('mysql');
+
+// Create a connection to the MySQL database
+const connection = mysql.createConnection({
+  host: 'localhost',           // Your DB host
+  user: 'root',                // Your DB username
+  password: '',                // Your DB password
+  database: 'your_database'    // Your DB name
+});
+
+// Connect to the database
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the MySQL database.');
+
+  // Query to select all records from the "students" table
+  const query = 'SELECT * FROM students';
+
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      return;
+    }
+
+    // Display results in console
+    console.log('Student Records:');
+    console.log(results);
+
+    // Close the connection
+    connection.end();
+  });
+});
+
+Q2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Registration Form</title>
+</head>
+<body>
+
+  <h2>Employee Registration Form</h2>
+  <form id="employeeForm" onsubmit="return validateForm()">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name">
+    <div id="nameError" class="error"></div>
+
+    <label for="email">Email ID:</label>
+    <input type="text" id="email" name="email">
+    <div id="emailError" class="error"></div>
+
+    <label for="mobile">Mobile Number:</label>
+    <input type="text" id="mobile" name="mobile">
+    <div id="mobileError" class="error"></div>
+
+    <label for="department">Department:</label>
+    <input type="text" id="department" name="department">
+    <div id="departmentError" class="error"></div>
+
+    <label for="joiningDate">Joining Date:</label>
+    <input type="date" id="joiningDate" name="joiningDate">
+    <div id="joiningDateError" class="error"></div>
+
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Get input values
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const department = document.getElementById("department").value.trim();
+      const joiningDate = document.getElementById("joiningDate").value;
+
+      // Error elements
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const mobileError = document.getElementById("mobileError");
+      const departmentError = document.getElementById("departmentError");
+      const joiningDateError = document.getElementById("joiningDateError");
+
+      // Clear previous error messages
+      nameError.textContent = "";
+      emailError.textContent = "";
+      mobileError.textContent = "";
+      departmentError.textContent = "";
+      joiningDateError.textContent = "";
+
+      // Regex patterns
+      const nameRegex = /^[A-Za-z\s]{2,}$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      const mobileRegex = /^[0-9]{10}$/;
+      const deptRegex = /^[A-Za-z\s]{2,}$/;
+
+      // Validate Name
+      if (!nameRegex.test(name)) {
+        nameError.textContent = "Please enter a valid name (letters only).";
+        isValid = false;
+      }
+
+      // Validate Email
+      if (!emailRegex.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      // Validate Mobile
+      if (!mobileRegex.test(mobile)) {
+        mobileError.textContent = "Please enter a valid 10-digit mobile number.";
+        isValid = false;
+      }
+
+      // Validate Department
+      if (!deptRegex.test(department)) {
+        departmentError.textContent = "Please enter a valid department name (letters only).";
+        isValid = false;
+      }
+
+      // Validate Joining Date (must be today or future)
+      const today = new Date();
+      const joinDate = new Date(joiningDate);
+      if (!joiningDate) {
+        joiningDateError.textContent = "Please select a joining date.";
+        isValid = false;
+      } else if (joinDate < today.setHours(0,0,0,0)) {
+        joiningDateError.textContent = "Joining date must be today or in the future.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>
