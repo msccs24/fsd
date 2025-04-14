@@ -1,0 +1,123 @@
+Q1
+const mysql = require('mysql');
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: 'localhost',      // Replace with your host
+  user: 'root',           // Replace with your database username
+  password: '',           // Replace with your database password
+  database: 'your_database_name' // Replace with your database name
+});
+
+// Connect to MySQL
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err.stack);
+    return;
+  }
+  console.log('Connected to MySQL as id', connection.threadId);
+
+  // Execute a query to select all records from customers
+  const query = 'SELECT * FROM customers';
+  connection.query(query, (error, results, fields) => {
+    if (error) throw error;
+    console.log('Customer Records:');
+    console.log(results); // Display the result object on console
+
+    // End the connection
+    connection.end();
+  });
+});
+
+Q2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Feedback Form</title>
+</head>
+<body>
+
+  <h2>Student Feedback Form</h2>
+  <form id="feedbackForm" onsubmit="return validateForm()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <div id="nameError" class="error"></div>
+
+    <label for="email">Email ID:</label>
+    <input type="text" id="email" name="email">
+    <div id="emailError" class="error"></div>
+
+    <label for="mobile">Mobile No.:</label>
+    <input type="text" id="mobile" name="mobile">
+    <div id="mobileError" class="error"></div>
+
+    <label for="feedback">Feedback:</label>
+    <select id="feedback" name="feedback">
+      <option value="">-- Select Feedback --</option>
+      <option value="Not good">Not good</option>
+      <option value="Good">Good</option>
+      <option value="Very good">Very good</option>
+      <option value="Excellent">Excellent</option>
+    </select>
+    <div id="feedbackError" class="error"></div>
+
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Get field values
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const feedback = document.getElementById("feedback").value;
+
+      // Error containers
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const mobileError = document.getElementById("mobileError");
+      const feedbackError = document.getElementById("feedbackError");
+
+      // Clear errors
+      nameError.textContent = "";
+      emailError.textContent = "";
+      mobileError.textContent = "";
+      feedbackError.textContent = "";
+
+      // Name Validation: Only letters and spaces
+      const nameRegex = /^[A-Za-z\s]{2,}$/;
+      if (!nameRegex.test(name)) {
+        nameError.textContent = "Please enter a valid name (letters only).";
+        isValid = false;
+      }
+
+      // Email Validation
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      if (!emailRegex.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      // Mobile Validation: 10-digit number
+      const mobileRegex = /^[0-9]{10}$/;
+      if (!mobileRegex.test(mobile)) {
+        mobileError.textContent = "Please enter a valid 10-digit mobile number.";
+        isValid = false;
+      }
+
+      // Feedback Validation
+      if (feedback === "") {
+        feedbackError.textContent = "Please select your feedback.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>
