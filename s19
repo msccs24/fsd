@@ -1,0 +1,72 @@
+Q1
+const message = "Hello World!";
+const upperCaseMessage = message.toUpperCase();
+console.log(upperCaseMessage);
+
+Q2
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+  <meta charset="UTF-8">
+  <title>SPA - Student Details Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="FormController">
+
+  <h2>Student Detail Form</h2>
+  <form name="studentForm" novalidate>
+
+    <!-- Name -->
+    <label>Name:</label>
+    <input type="text" name="name" ng-model="student.name" ng-pattern="/^[A-Za-z\s]+$/" required />
+    <div class="error" ng-show="studentForm.name.$touched && studentForm.name.$invalid">
+      Name should contain letters and spaces only.
+    </div>
+
+    <!-- Mobile Number -->
+    <label>Mobile Number:</label>
+    <input type="text" name="mobile" ng-model="student.mobile" ng-pattern="/^\d{10}$/" required />
+    <div class="error" ng-show="studentForm.mobile.$touched && studentForm.mobile.$invalid">
+      Mobile number must be exactly 10 digits.
+    </div>
+
+    <!-- Pin Code -->
+    <label>Pin Code:</label>
+    <input type="text" name="pincode" ng-model="student.pincode" ng-pattern="/^\d{6}$/" required />
+    <div class="error" ng-show="studentForm.pincode.$touched && studentForm.pincode.$invalid">
+      Pin code must be exactly 6 digits.
+    </div>
+
+    <!-- Email -->
+    <label>Email Address:</label>
+    <input type="email" name="email" ng-model="student.email"
+           ng-pattern="/^[^@]+@[^@]+\.[^@]{2,}$/" required />
+    <div class="error" ng-show="studentForm.email.$touched && studentForm.email.$invalid">
+      Email must contain one @ and a dot (e.g., example@mail.com).
+    </div>
+
+    <!-- Address -->
+    <label>Address:</label>
+    <input type="text" name="address" ng-model="student.address"
+           ng-pattern="/^SPPU M\.Sc\. Computer Science Syllabus 2023-24$/" required />
+    <div class="error" ng-show="studentForm.address.$touched && studentForm.address.$invalid">
+      Address must be: "SPPU M.Sc. Computer Science Syllabus 2023-24".
+    </div>
+
+    <button type="submit" ng-disabled="studentForm.$invalid">Submit</button>
+  </form>
+
+  <div ng-if="studentForm.$valid && studentForm.$submitted">
+    <h3>Submitted Data:</h3>
+    <pre>{{ student | json }}</pre>
+  </div>
+
+  <script>
+    angular.module('studentApp', [])
+      .controller('FormController', ['$scope', function($scope) {
+        $scope.student = {};
+      }]);
+  </script>
+
+</body>
+</html>
