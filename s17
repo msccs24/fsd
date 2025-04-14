@@ -1,0 +1,121 @@
+Q1
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
+
+</head>
+<h1>MSc-CS Syllabus</h1>
+<div ng-view></div>
+<body>
+	<div ng-app ="mainApp">
+		<p><a href="#dm">301.Design and analysis algorithm</a></p>
+		<div ng-view></div>
+		<script type="text/ng-template" id="Design.html">
+			<h2>Design and analysis algorithm </h2>
+			<p>
+			Unit 1.Introduction of Design<br>
+			Unit 2.Kruskal's algorithm<br>
+			Unit 3.Divide and Conquer<br>
+			</p>
+			{{message}}
+		</script>
+	</div>
+	<script>
+		var mainApp=angular.module("mainApp",['ngRoute']);
+		mainApp.config(['$routeProvider',function($routeProvider){
+			$routeProvider.when('/dm',{
+			templateUrl:'Design.html',
+			controller:'dmController'})
+		}]);
+		mainApp.controller('dmController',function($scope){
+			$scope.message="This page will be used to display Digital Marketing";
+		});
+	</script>		
+</body>
+</html>
+
+Q2
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<style>
+body {
+	margin:2%;
+	font-size:120%;
+}
+th,td {
+	padding:20px;
+}
+</style>
+</head>
+
+<body ng-app="myApp" ng-controller="ListController">
+	<h1>Student Details</h1>
+	<table border=1>
+		<thead>
+			<tr>
+				<th>S.No</th>
+				<th>Name</th>
+				<th>Class</th>
+				<th>Phone No.</th>
+				<th>Address</th>
+			</tr>
+		</thead>
+		<tr ng-repeat="i in student">
+			<td>{{i.sno}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.class}}</td>
+			<td>{{i.phno}}</td>
+			<td>{{i.address}}</td>
+		</tr>
+	</table>
+	
+</body>
+
+<script> 
+	var app = angular.module('myApp',[])
+	app.controller("ListController",function($scope){
+	 	$scope.student =[{
+	 		sno:1,
+	 		name:'Roger Federer',
+	 		class:'FY',
+	 		phno : 9564675378,
+	 		address: "Satara"
+	 		},
+	 		{
+	 		sno:2,
+	 		name:'Om Ingale',
+	 		class:'FY',
+	 		phno : 9564675378,
+	 		address: "Niphad"
+	 		},
+	 		{
+	 		sno:3,
+	 		name:'Sanat Pillai',
+	 		class:'MSC',
+	 		phno : 9564675378,
+	 		address: "Madurai"
+	 		},
+	 		{
+	 		sno:4,
+	 		name:'Rushi Valvi',
+	 		class:'TY',
+	 		phno : 9564675378,
+	 		address: "Dhule"
+	 		},
+	 		
+	 		{
+	 		sno:5,
+	 		name:'Durvesh',
+	 		class:'MSC',
+	 		phno : 954675378,
+	 		address: "Nashik"
+	 		}
+	 		];	
+	 	}); 	
+</script>
+
+</html>
