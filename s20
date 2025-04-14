@@ -1,0 +1,97 @@
+Q1
+const mysql = require('mysql');
+
+// Step 1: Connect to MySQL server (no database yet)
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: ''  // Replace with your MySQL password
+});
+
+// Connect to MySQL server
+connection.connect((err) => {
+  if (err) throw err;
+  console.log("Connected to MySQL Server.");
+
+  // Step 2: Create Database
+  connection.query("CREATE DATABASE IF NOT EXISTS studentdb", (err, result) => {
+    if (err) throw err;
+    console.log("Database 'studentdb' created or already exists.");
+
+    // Step 3: Connect to the new database
+    const dbConnection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'studentdb'
+    });
+
+    dbConnection.connect((err) => {
+      if (err) throw err;
+      console.log("Connected to 'studentdb'.");
+
+      // Step 4: Create students table
+      const createTableQuery = `
+        CREATE TABLE IF NOT EXISTS students (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(100),
+          email VARCHAR(100),
+          mobile VARCHAR(15),
+          course VARCHAR(100)
+        )
+      `;
+
+      dbConnection.query(createTableQuery, (err, result) => {
+        if (err) throw err;
+        console.log("Table 'students' created or already exists.");
+        dbConnection.end();
+      });
+    });
+  });
+});
+
+Q2
+<html>	
+<head>
+	<title>Student Form</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<script>
+function Validate()
+{
+	let uname=document.getElementById('uname').value;
+	let pass=document.getElementById('pass').value;
+	
+
+	if(uname.length > 3 && uname.length < 20 && pass.length >3 && pass.length<10)
+	{
+		alert("Data is correct");
+	}
+	else if(uname.length===0 && pass.length===0)
+	{
+		alert("Fill the Information");
+	}
+	else
+	{
+		alert("Enter the Valid Details");
+	}
+}
+</script>
+</head>
+<body ng-app>
+	<form name="studentform" novalidate>
+				 Username:<input type ="text" name="uname" ng-model="uname"ng-minlength="3"id="uname" ng-required="true">
+				 <span ng-show="studentform.uname.$touched && studentform.uname.$error.required">Username is required</span>
+				 <span ng-show="studentform.uname.$error.minlength">Username is Too short</span>
+ 				 <span ng-show="studentform.uname.$invalid">Enter Username</span><br><br>
+ 				 
+ 				 Password:<input type ="password" name="pass" ng-model="pass"ng-minlength="8"id="pass" ng-required="true">
+				 <span ng-show="studentform.uname.$touched && studentform.uname.$error.required">Password is required</span>
+				 <span ng-show="studentform.uname.$error.minlength">Password is Too short</span>
+ 				 <span ng-show="studentform.uname.$invalid">Enter Password</span><br><br>
+ 				 
+ 				 <input type="button" value="submit" onclick="Validate()">
+	</form>
+</body>
+</html>
+
