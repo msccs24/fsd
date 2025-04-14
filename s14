@@ -1,0 +1,107 @@
+Q1
+var http=require('http');
+
+var server=http.createServer(function(req,res)
+{
+	if(req.url=='/')
+	{
+		res.writeHead(200,{'Content-Type' : 'text.html'});
+		res.write('<html><body><p>This is Home page</p></body></html>');
+		res.end();
+	}
+	else if(req.url=='/admin')
+	{
+		res.writeHead(200,{'Content-Type' : 'text.html'});
+		res.write('<html><body><p>This is admin page</p></body></html>');
+		res.end();
+	}
+	else if(req.url=='/student')
+	{
+		res.writeHead(200,{'Content-Type' : 'text.html'});
+		res.write('<html><body><p>This is Student page</p></body></html>');
+		res.end();
+	}
+	else
+	{
+		res.end('Invalid request');
+	}
+});server.listen(8000);
+console.log("Server is running in port no 8000");
+
+Q2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Registration Form</title>
+</head>
+<body>
+
+  <h2>Employee Registration Form</h2>
+  <form id="empForm" onsubmit="return validateForm()">
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob">
+    <div id="dobError" class="error"></div>
+
+    <label for="joining">Joining Date:</label>
+    <input type="date" id="joining" name="joining">
+    <div id="joiningError" class="error"></div>
+
+    <label for="salary">Salary:</label>
+    <input type="text" id="salary" name="salary">
+    <div id="salaryError" class="error"></div>
+
+    <br><br>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      const dob = document.getElementById("dob").value;
+      const joining = document.getElementById("joining").value;
+      const salary = document.getElementById("salary").value.trim();
+
+      const dobError = document.getElementById("dobError");
+      const joiningError = document.getElementById("joiningError");
+      const salaryError = document.getElementById("salaryError");
+
+      // Clear errors
+      dobError.textContent = "";
+      joiningError.textContent = "";
+      salaryError.textContent = "";
+
+      const today = new Date();
+
+      // DOB Validation: must be in the past
+      if (!dob) {
+        dobError.textContent = "Please enter Date of Birth.";
+        isValid = false;
+      } else if (new Date(dob) >= today) {
+        dobError.textContent = "Date of Birth must be in the past.";
+        isValid = false;
+      }
+
+      // Joining Date Validation: must be today or in the future
+      if (!joining) {
+        joiningError.textContent = "Please enter Joining Date.";
+        isValid = false;
+      } else if (new Date(joining) < today.setHours(0,0,0,0)) {
+        joiningError.textContent = "Joining Date must be today or a future date.";
+        isValid = false;
+      }
+
+      // Salary Validation: must be numeric and positive
+      const salaryRegex = /^[0-9]+(\.[0-9]{1,2})?$/;
+      if (!salaryRegex.test(salary) || parseFloat(salary) <= 0) {
+        salaryError.textContent = "Please enter a valid positive salary.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>
