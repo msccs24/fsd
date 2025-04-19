@@ -1,29 +1,26 @@
 Q1
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <title>ng-click Alert Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
+<body ng-controller="myController">
 
-<body ng-app="myApp">
-<div ng-controller="myCtrl">
-	<button ng-click="myFunc()">Display Games</button>
-	<ol>
-	<li ng-repeat="i in game"ng-bind="i"></li>
-	</ol>
-</div>
+  <button ng-click="showAlert()">Click Me!</button>
 
-<script> 
-	angular.module('myApp',[])
-	.controller("myCtrl",['$scope',function($scope){
-	 	$scope.count=0;
-	 	$scope.myFunc = function(){
-	 	$scope.game = ['Cricket','vollyball','Basketball'];
-	 	};
-	 }]);
-</script>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myController', function($scope) {
+      $scope.showAlert = function() {
+        alert("You clicked the button!");
+      };
+    });
+  </script>
+
 </body>
 </html>
+
 
 Q2
 const http=require('http');
